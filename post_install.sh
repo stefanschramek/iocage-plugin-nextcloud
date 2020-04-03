@@ -7,6 +7,10 @@ TIME_ZONE="Europe/Vienna"
 JAIL_IP="%%IP%%"
 CERT_EMAIL="email@domain.tld"
 DNS_ENV="AZURE_CLIENT_ID=xxx AZURE_CLIENT_SECRET=xxx AZURE_SUBSCRIPTION_ID=xxx AZURE_TENANT_ID=xxx AZURE_RESOURCE_GROUP=xxx AZURE_METADATA_ENDPOINT=https://login.microsoftonline.com/"
+DB_ROOT_PASSWORD=$(openssl rand -base64 16)
+DB_PASSWORD=$(openssl rand -base64 16)
+ADMIN_PASSWORD=$(openssl rand -base64 12)
+
 
 DEFAULT_GW_IP=""
 INTERFACE="vnet0"
@@ -124,4 +128,8 @@ su -m www -c 'php /usr/local/www/nextcloud/occ encryption:disable'
 su -m www -c 'php /usr/local/www/nextcloud/occ background:cron'
 su -m www -c 'php -f /usr/local/www/nextcloud/cron.php'
 crontab -u www /tmp/www-crontab
-
+rm /tmp/www-crontab
+echo "Nextcloud successfully installed" > /root/PLUGIN_INFO
+echo "${DB_NAME} root password is ${DB_ROOT_PASSWORD}" > /root/PLUGIN_INFO
+echo "Nextcloud database password is ${DB_PASSWORD}" >> /root/PLUGIN_INFO
+echo "Nextcloud Administrator password is ${ADMIN_PASSWORD}" >> /root/PLUGIN_INFO
