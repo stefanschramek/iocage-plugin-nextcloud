@@ -1,14 +1,18 @@
 #!/bin/sh
 # Initialize defaults
+HOST_NAME="nextcloud.nomadic.io"
+DL_FLAGS="tls.dns.azure"
+DNS_SETTING="dns azure"
+TIME_ZONE="Europe/Vienna"
+
+
 JAIL_IP=""
 DEFAULT_GW_IP=""
 INTERFACE="vnet0"
 VNET="on"
 POOL_PATH=""
 JAIL_NAME="nextcloud"
-TIME_ZONE=""
-HOST_NAME=""
-DATABASE="mariadb"
+
 DB_PATH=""
 FILES_PATH=""
 PORTS_PATH=""
@@ -17,8 +21,7 @@ STANDALONE_CERT=0
 SELFSIGNED_CERT=0
 DNS_CERT=0
 NO_CERT=0
-DL_FLAGS="tls.dns.azure"
-DNS_SETTING="dns azure"
+
 RELEASE="11.3-RELEASE"
 JAILS_MOUNT=$(zfs get -H -o value mountpo
 
@@ -71,3 +74,8 @@ chown -R www:www /usr/local/www/nextcloud/
 sysrc mysql_enable="YES"
 sysrc redis_enable="YES"
 sysrc php_fpm_enable="YES"
+
+sed -i '' "s/yourhostnamehere/${HOST_NAME}/" /usr/local/www/Caddyfile
+sed -i '' "s/DNS-PLACEHOLDER/${DNS_SETTING}/" /usr/local/www/Caddyfile
+sed -i '' "s/JAIL-IP/${JAIL_IP}/" /usr/local/www/Caddyfile
+sed -i '' "s|mytimezone|${TIME_ZONE}|" /usr/local/etc/php.ini
