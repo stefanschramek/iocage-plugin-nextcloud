@@ -11,25 +11,6 @@ DB_ROOT_PASSWORD=$(openssl rand -base64 16)
 DB_PASSWORD=$(openssl rand -base64 16)
 ADMIN_PASSWORD=$(openssl rand -base64 12)
 
-
-DEFAULT_GW_IP=""
-INTERFACE="vnet0"
-VNET="on"
-POOL_PATH=""
-JAIL_NAME="nextcloud"
-
-DB_PATH=""
-FILES_PATH=""
-PORTS_PATH=""
-CONFIG_PATH=""
-STANDALONE_CERT=0
-SELFSIGNED_CERT=0
-DNS_CERT=0
-NO_CERT=0
-
-RELEASE="11.3-RELEASE"
-JAILS_MOUNT=$(zfs get -H -o value mountpo
-
 #####
 # Folder Creation and Permissions
 #####
@@ -42,9 +23,6 @@ mkdir -p /usr/local/www/nextcloud/config
 mkdir -p /mnt/files
 chown -R www:www /mnt/files
 chmod -R 770 /mnt/files
-
-mkdir -p /mnt/includes
-
 #####
 # Additional Dependency installation
 #####
@@ -131,5 +109,5 @@ crontab -u www /tmp/www-crontab
 rm /tmp/www-crontab
 echo "Nextcloud successfully installed" > /root/PLUGIN_INFO
 echo "${DB_NAME} root password is ${DB_ROOT_PASSWORD}" > /root/PLUGIN_INFO
-echo "Nextcloud database password is ${DB_PASSWORD}" >> /root/PLUGIN_INFO
-echo "Nextcloud Administrator password is ${ADMIN_PASSWORD}" >> /root/PLUGIN_INFO
+echo "Nextcloud database password is ${DB_PASSWORD}" > /root/PLUGIN_INFO
+echo "Nextcloud Administrator password is ${ADMIN_PASSWORD}" > /root/PLUGIN_INFO
