@@ -4,7 +4,7 @@ HOST_NAME="nextcloud.domain.tld"
 DL_FLAGS="tls.dns.azure"
 DNS_SETTING="dns azure"
 TIME_ZONE="Europe/Vienna"
-JAIL_IP="%%IP%%"
+JAIL_IP=$(ifconfig epair0b | grep inet | cut -w -f3)
 CERT_EMAIL="email@domain.tld"
 DNS_ENV="AZURE_CLIENT_ID=xxx AZURE_CLIENT_SECRET=xxx AZURE_SUBSCRIPTION_ID=xxx AZURE_TENANT_ID=xxx AZURE_RESOURCE_GROUP=xxx AZURE_METADATA_ENDPOINT=https://login.microsoftonline.com/"
 DB_ROOT_PASSWORD=$(openssl rand -base64 16)
