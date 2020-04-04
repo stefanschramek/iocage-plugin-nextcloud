@@ -10,6 +10,7 @@ DNS_ENV="AZURE_CLIENT_ID=xxx AZURE_CLIENT_SECRET=xxx AZURE_SUBSCRIPTION_ID=xxx A
 DB_ROOT_PASSWORD=$(openssl rand -base64 16)
 DB_PASSWORD=$(openssl rand -base64 16)
 ADMIN_PASSWORD=$(openssl rand -base64 12)
+TMP_FOLDER="/tmp/U0XfaFP10hh2lTMH"
 
 #####
 # Folder Creation and Permissions
@@ -58,6 +59,14 @@ sysrc mysql_enable="YES"
 sysrc redis_enable="YES"
 sysrc php_fpm_enable="YES"
 
+# Copy and edit pre-written config files
+cp -f ${TMP_FOLDER}/php.ini /usr/local/etc/php.ini
+cp -f ${TMP_FOLDER}/redis.conf /usr/local/etc/redis.conf
+cp -f ${TMP_FOLDER}/www.conf /usr/local/etc/php-fpm.d/
+cp -f ${TMP_FOLDER}/Caddyfile /usr/local/www/
+cp -f ${TMP_FOLDER}/caddy /usr/local/etc/rc.d/
+cp -f ${TMP_FOLDER}/my-system.cnf /var/db/mysql/my.cnf
+
 sed -i '' "s/yourhostnamehere/${HOST_NAME}/" /usr/local/www/Caddyfile
 sed -i '' "s/DNS-PLACEHOLDER/${DNS_SETTING}/" /usr/local/www/Caddyfile
 sed -i '' "s/JAIL-IP/${JAIL_IP}/" /usr/local/www/Caddyfile
@@ -76,7 +85,7 @@ mysql -u root -e "DROP DATABASE IF EXISTS test;"
 mysql -u root -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';"
 mysql -u root -e "UPDATE mysql.user SET Password=PASSWORD('${DB_ROOT_PASSWORD}') WHERE User='root';"
 mysqladmin reload
-cp -f /mnt/includes/my.cnf /root/.my.cnf
+cp -f ${TMP_FOLDER}/my.cnf /root/.my.cnf
 sed -i '' "s|mypassword|${DB_ROOT_PASSWORD}|" /root/.my.cnf
 
 # CLI installation and configuration of Nextcloud
@@ -105,8 +114,8 @@ su -m www -c 'php /usr/local/www/nextcloud/occ encryption:enable'
 su -m www -c 'php /usr/local/www/nextcloud/occ encryption:disable'
 su -m www -c 'php /usr/local/www/nextcloud/occ background:cron'
 su -m www -c 'php -f /usr/local/www/nextcloud/cron.php'
-crontab -u www /tmp/www-crontab
-rm /tmp/www-crontab
+crontab -u www ${TMP_FOLDER}/www-crontab
+rm -R ${TMP_FOLDER}
 echo "Nextcloud successfully installed" > /root/PLUGIN_INFO
 echo "${DB_NAME} root password is ${DB_ROOT_PASSWORD}" > /root/PLUGIN_INFO
 echo "Nextcloud database password is ${DB_PASSWORD}" > /root/PLUGIN_INFO
