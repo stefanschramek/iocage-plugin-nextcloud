@@ -16,16 +16,16 @@
 			"description": "Timezone used for Nextcloud",
 			"requirerestart": true
 		},
-		"cert_email": {
+		"caddy_cert_email": {
 			"type": "string",
-			"name": "E-Mail",
-			"description": "Timezone used for Nextcloud",
+			"name": "Certificate email address",
+			"description": "Email address used for certificate challenge",
 			"requirerestart": true
 		},
-		"dns_env": {
+		"caddy_env": {
 			"type": "string",
-			"name": "DNS Challenge Config",
-			"description": "Settings for DNS challenge",
+			"name": "Certificate DNS challenge config",
+			"description": "Settings for certificate DNS challenge",
 			"requirerestart": true
 		}
 	}
