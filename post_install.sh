@@ -78,7 +78,7 @@ sysrc caddy_cert_email="${CERT_EMAIL}"
 sysrc caddy_env="${DNS_ENV}"
 
 #start services
-service mysql start
+service mysql_server start
 service redis start
 service php_fpm start
 service caddy start
