@@ -80,7 +80,7 @@ sysrc caddy_env="${DNS_ENV}"
 #start services
 service mysql-server start
 service redis start
-service php_fpm start
+service php-fpm start
 service caddy start
 
 # Secure database, set root password, create Nextcloud DB, user, and password
