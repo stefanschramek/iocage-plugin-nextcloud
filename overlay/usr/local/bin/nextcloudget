@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Get configuration setting from Nextcloud configuration file
+case $1 in
+    hostname) echo `sed -n 1p /usr/local/www/Caddyfile | sed 's/\([a-z.]*\).*/\1/'`
+          ;;
+    timezone) echo `awk -F' = ' '/^date.timezone/ { print $2 }' /usr/local/etc/php.ini`
+             ;;
+    caddy_cert_email) echo `sysrc -n caddy_cert_email`
+            ;;
+    caddy_env) echo `sysrc -n caddy_env`
+             ;;            
+    *) echo "Unknown option">&2
+       exit 1
+       ;;
+esac
