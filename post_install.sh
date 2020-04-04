@@ -65,6 +65,7 @@ cp -f ${TMP_FOLDER}/redis.conf /usr/local/etc/redis.conf
 cp -f ${TMP_FOLDER}/www.conf /usr/local/etc/php-fpm.d/
 cp -f ${TMP_FOLDER}/Caddyfile /usr/local/www/
 cp -f ${TMP_FOLDER}/caddy /usr/local/etc/rc.d/
+chmod 555 /usr/local/etc/rc.d/caddy
 cp -f ${TMP_FOLDER}/my-system.cnf /var/db/mysql/my.cnf
 
 sed -i '' "s/yourhostnamehere/${HOST_NAME}/" /usr/local/www/Caddyfile
