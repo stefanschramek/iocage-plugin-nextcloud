@@ -76,6 +76,12 @@ sysrc caddy_enable="YES"
 sysrc caddy_cert_email="${CERT_EMAIL}"
 sysrc caddy_env="${DNS_ENV}"
 
+#start services
+service mysql start
+service redis start
+service php_fpm start
+service caddy start
+
 # Secure database, set root password, create Nextcloud DB, user, and password
 mysql -u root -e "CREATE DATABASE nextcloud;"
 mysql -u root -e "GRANT ALL ON nextcloud.* TO nextcloud@localhost IDENTIFIED BY '${DB_PASSWORD}';"
