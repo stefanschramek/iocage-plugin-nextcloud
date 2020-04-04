@@ -1,22 +1,31 @@
 {
-  "servicerestart":"service mineos restart",
-	"serviceget": "/usr/local/bin/mineosget",
-	"serviceset": "/usr/local/bin/mineosset",
-	"options":
+    "servicerestart":"service caddy restart",
+    "serviceget": "/usr/local/bin/nextcloudget",
+    "serviceset": "/usr/local/bin/nextcloudset",
+    "options":
 	{
-		"port": {
-			"type": "int",
-			"name": "WebUI Port",
-			"description": "Port for MineOS web admin portal",
-			"range": "1024-32000",
-			"default": "8443",
+		"hostname": {
+			"type": "string",
+			"name": "Nextcloud FQDN",
+			"description": "Hostname (FQDN) for Nextcloud",
 			"requirerestart": true
 		},
-		"sslmode": {
-			"type": "bool",
-			"name": "Use SSL",
-			"description": "Use HTTPS to connect to web admin portal",
-			"default": false,
+		"timezone": {
+			"type": "string",
+			"name": "Timezone",
+			"description": "Timezone used for Nextcloud",
+			"requirerestart": true
+		},
+		"cert_email": {
+			"type": "string",
+			"name": "E-Mail",
+			"description": "Timezone used for Nextcloud",
+			"requirerestart": true
+		},
+		"dns_env": {
+			"type": "string",
+			"name": "DNS Challenge Config",
+			"description": "Settings for DNS challenge",
 			"requirerestart": true
 		}
 	}
