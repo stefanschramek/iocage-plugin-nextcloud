@@ -10,7 +10,7 @@ DNS_ENV="AZURE_CLIENT_ID=xxx AZURE_CLIENT_SECRET=xxx AZURE_SUBSCRIPTION_ID=xxx A
 DB_ROOT_PASSWORD=$(openssl rand -base64 16)
 DB_PASSWORD=$(openssl rand -base64 16)
 ADMIN_PASSWORD=$(openssl rand -base64 12)
-TMP_FOLDER="/tmp/sjzi4f96"
+TMP_FOLDER="/tmp/U0XfaFP10hh2lTMH"
 
 #####
 # Folder Creation and Permissions
