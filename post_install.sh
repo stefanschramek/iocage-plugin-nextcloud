@@ -122,7 +122,7 @@ su -m www -c 'php /usr/local/www/nextcloud/occ encryption:disable'
 su -m www -c 'php /usr/local/www/nextcloud/occ background:cron'
 su -m www -c 'php -f /usr/local/www/nextcloud/cron.php'
 crontab -u www ${TMP_FOLDER}/www-crontab
-echo "Nextcloud successfully installed" > /root/PLUGIN_INFO
-echo "${DB_NAME} root password is ${DB_ROOT_PASSWORD}" >> /root/PLUGIN_INFO
-echo "Nextcloud database password is ${DB_PASSWORD}" >> /root/PLUGIN_INFO
-echo "Nextcloud administrator password is ${ADMIN_PASSWORD}" >> /root/PLUGIN_INFO
+echo "Nextcloud Configuration:" > /root/PLUGIN_INFO
+echo "• Database: ${DB_NAME}/${DB_ROOT_PASSWORD}" >> /root/PLUGIN_INFO
+echo "• Nextcloud database password: ${DB_PASSWORD}" >> /root/PLUGIN_INFO
+echo "• Nextcloud administrator password: ${ADMIN_PASSWORD}" >> /root/PLUGIN_INFO
