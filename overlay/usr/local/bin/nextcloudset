@@ -17,6 +17,8 @@ case $1 in
               sed -i '' "s/yourhostnamehere/$2/" /usr/local/www/Caddyfile
               sed -i '' "s/DNS-PLACEHOLDER/${DNS_SETTING}/" /usr/local/www/Caddyfile
               sed -i '' "s/JAIL-IP/${JAIL_IP}/" /usr/local/www/Caddyfile
+              su -m www -c "php /usr/local/www/nextcloud/occ config:system:set overwrite.cli.url --value=\"https://$2/\""
+              su -m www -c "php /usr/local/www/nextcloud/occ config:system:set trusted_domains 1 --value=\"$2\""
               give_message
               ;;
     timezone) cp -f ${TMP_FOLDER}/php.ini /usr/local/etc/php.ini
