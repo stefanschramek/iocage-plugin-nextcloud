@@ -18,17 +18,19 @@ case $1 in
               sed -i '' "s/DNS-PLACEHOLDER/${DNS_SETTING}/" /usr/local/www/Caddyfile
               sed -i '' "s/JAIL-IP/${JAIL_IP}/" /usr/local/www/Caddyfile
               give_message
-          ;;
+              ;;
     timezone) cp -f ${TMP_FOLDER}/php.ini /usr/local/etc/php.ini
               sed -i '' "s|mytimezone|$2|" /usr/local/etc/php.ini
               give_message
-             ;;
-    caddy_cert_email) sysrc caddy_cert_email="$2"
+              ;;
+    caddy_cert_email) sysrc -x caddy_cert_email
+                      sysrc caddy_cert_email="$2"
                       give_message
-            ;;
-    caddy_env) sysrc caddy_env="$2"
+                      ;;
+    caddy_env) sysrc -x caddy_env
+               sysrc caddy_env="$2"
                give_message
-             ;;            
+               ;;            
     *) echo "Unknown option">&2
        exit 1
        ;;
