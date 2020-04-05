@@ -21,10 +21,13 @@ case $1 in
           ;;
     timezone) cp -f ${TMP_FOLDER}/php.ini /usr/local/etc/php.ini
               sed -i '' "s|mytimezone|$2|" /usr/local/etc/php.ini
+              give_message
              ;;
     caddy_cert_email) sysrc caddy_cert_email="$2"
+                      give_message
             ;;
     caddy_env) sysrc caddy_env="$2"
+               give_message
              ;;            
     *) echo "Unknown option">&2
        exit 1
