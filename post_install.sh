@@ -9,6 +9,7 @@ CERT_EMAIL="email@domain.tld"
 DNS_ENV="AZURE_CLIENT_ID=xxx AZURE_CLIENT_SECRET=xxx AZURE_SUBSCRIPTION_ID=xxx AZURE_TENANT_ID=xxx AZURE_RESOURCE_GROUP=xxx AZURE_METADATA_ENDPOINT=https://login.microsoftonline.com/"
 DB_ROOT_PASSWORD=$(openssl rand -base64 16)
 DB_PASSWORD=$(openssl rand -base64 16)
+ADMIN_USER="administrator"
 ADMIN_PASSWORD=$(openssl rand -base64 12)
 TMP_FOLDER="/tmp/U0XfaFP10hh2lTMH"
 
@@ -98,7 +99,7 @@ sed -i '' "s|mypassword|${DB_ROOT_PASSWORD}|" /root/.my.cnf
 # CLI installation and configuration of Nextcloud
 touch /var/log/nextcloud.log
 chown www /var/log/nextcloud.log
-su -m www -c "php /usr/local/www/nextcloud/occ maintenance:install --database=\"mysql\" --database-name=\"nextcloud\" --database-user=\"nextcloud\" --database-pass=\"${DB_PASSWORD}\" --database-host=\"localhost:/tmp/mysql.sock\" --admin-user=\"admin\" --admin-pass=\"${ADMIN_PASSWORD}\" --data-dir=\"/mnt/files\""
+su -m www -c "php /usr/local/www/nextcloud/occ maintenance:install --database=\"mysql\" --database-name=\"nextcloud\" --database-user=\"nextcloud\" --database-pass=\"${DB_PASSWORD}\" --database-host=\"localhost:/tmp/mysql.sock\" --admin-user=\"${ADMIN_USER}\" --admin-pass=\"${ADMIN_PASSWORD}\" --data-dir=\"/mnt/files\""
 su -m www -c "php /usr/local/www/nextcloud/occ config:system:set mysql.utf8mb4 --type boolean --value=\"true\""
 su -m www -c "php /usr/local/www/nextcloud/occ db:add-missing-indices"
 su -m www -c "php /usr/local/www/nextcloud/occ db:convert-filecache-bigint --no-interaction"
