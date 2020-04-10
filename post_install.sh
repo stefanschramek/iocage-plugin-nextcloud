@@ -4,7 +4,6 @@ HOST_NAME="nextcloud.domain.tld"
 DL_FLAGS="tls.dns.azure"
 DNS_SETTING="dns azure"
 TIME_ZONE="Europe/Vienna"
-JAIL_IP=$(ifconfig epair0b | grep inet | cut -w -f3)
 CERT_EMAIL="email@domain.tld"
 DNS_ENV="AZURE_CLIENT_ID=xxx AZURE_CLIENT_SECRET=xxx AZURE_SUBSCRIPTION_ID=xxx AZURE_TENANT_ID=xxx AZURE_RESOURCE_GROUP=xxx AZURE_METADATA_ENDPOINT=https://login.microsoftonline.com/"
 DB_ROOT_PASSWORD=$(openssl rand -base64 16)
@@ -71,7 +70,7 @@ cp -f ${TMP_FOLDER}/my-system.cnf /var/db/mysql/my.cnf
 
 sed -i '' "s/yourhostnamehere/${HOST_NAME}/" /usr/local/www/Caddyfile
 sed -i '' "s/DNS-PLACEHOLDER/${DNS_SETTING}/" /usr/local/www/Caddyfile
-sed -i '' "s/JAIL-IP/${JAIL_IP}/" /usr/local/www/Caddyfile
+sed -i '' "s/JAIL-IP/${IOCAGE_PLUGIN_IP}/" /usr/local/www/Caddyfile
 sed -i '' "s|mytimezone|${TIME_ZONE}|" /usr/local/etc/php.ini
 
 sysrc caddy_enable="YES"
@@ -116,7 +115,7 @@ su -m www -c "php /usr/local/www/nextcloud/occ config:system:set overwrite.cli.u
 su -m www -c 'php /usr/local/www/nextcloud/occ config:system:set htaccess.RewriteBase --value="/"'
 su -m www -c 'php /usr/local/www/nextcloud/occ maintenance:update:htaccess'
 su -m www -c "php /usr/local/www/nextcloud/occ config:system:set trusted_domains 1 --value=\"${HOST_NAME}\""
-su -m www -c "php /usr/local/www/nextcloud/occ config:system:set trusted_domains 2 --value=\"${JAIL_IP}\""
+su -m www -c "php /usr/local/www/nextcloud/occ config:system:set trusted_domains 2 --value=\"${IOCAGE_PLUGIN_IP}\""
 su -m www -c 'php /usr/local/www/nextcloud/occ app:enable encryption'
 su -m www -c 'php /usr/local/www/nextcloud/occ encryption:enable'
 su -m www -c 'php /usr/local/www/nextcloud/occ encryption:disable'
